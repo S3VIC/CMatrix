@@ -2,7 +2,6 @@
 #include <vector>
 #include <iostream>
 
-namespace CMatrix {
 template <typename T>
     class Matrix{
         private:
@@ -13,4 +12,15 @@ template <typename T>
             ~Matrix();
             void test();
     };
-}
+
+
+template <typename T>
+  Matrix<T>::Matrix() {}
+
+template <typename T>
+  Matrix<T>::~Matrix() {}
+
+  template <typename T>  
+  void Matrix<T>::test(){
+    std::cout << "Hello from Lib" << std::endl;
+  }

@@ -5,20 +5,23 @@ project(CMatrix VERSION 0.1)
 set(CMAKE_CXX_STANDARD 17
     CMAKE_CXX_STANDARD_REQUIRED True)
 
-include_directories(include)
+set(LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}/lib")
+set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}") 
 
-include_directories(src)
+set(CMAKE_PREFIX_PATH "${PROJECT_BINARY_DIR}/lib")
 
-add_library(CMatrix 
- ./src/cmatrix.cpp
+add_subdirectory(src)
+
+
+add_executable(test
+    main.cpp
 )
-add_executable(example main.cpp)
 
-target_link_libraries(CMatrix PUBLIC
-    ${EXTRA_LIBS}
-    )
+find_library(ADDITIONAL_LIBS NAMES matrix HINTS ${CMAKE_PREFIX_PATH})
 
-target_include_directories(CMatrix PUBLIC
-    "${PROJECT_BINARY_DIR}"
-    "${EXTRA_INCLUDES}"
+target_include_directories(test PUBLIC 
+    ${PROJECT_SOURCE_DIR}/include
+    ${PROJECT_SOURCE_DIR}/src
 )
+
+target_link_libraries(test PUBLIC matrix)

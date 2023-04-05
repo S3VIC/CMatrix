@@ -1,7 +1,9 @@
 #include<iostream>
-#include "cmatrix.hpp"
+#include "matrix.hpp"
 
 int main(void){
-  std::cout<< "Hello world!" << std::endl;
+  Matrix<int> matrix;
+  matrix.test();
+  std::cout << "Hello" << std::endl;
   return 0;
 }
