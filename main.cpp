@@ -6,9 +6,9 @@ int main(void){
   Matrix<int> matrixB = Matrix<int>(2,2);
   matrixB.toEye();
   matrix.toEye();
-  Matrix<int>* added = add(matrix, matrixB);
-  if(added)
-      added->print();
+  Matrix<int> added;
+  added = matrix + matrixB;
+  added.print();
   //matrix.test();
   return 0;
 }

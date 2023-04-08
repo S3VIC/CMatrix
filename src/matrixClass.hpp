@@ -12,6 +12,9 @@ template <typename T>
             Matrix();
             Matrix(const int &rows, const int &cols);
             ~Matrix();
+            //operators
+            Matrix<T>& operator+(const Matrix<T>& other);
+            Matrix<T>& operator=(const Matrix<T>& other);
             void test();
             void print();
             void toEye();
@@ -24,7 +27,9 @@ template <typename T>
 
 
 template <typename T>
-  Matrix<T>::Matrix() {}
+  Matrix<T>::Matrix()
+    : elems(nullptr), rowsNum(0), colsNum(0)
+{}
 
 
 template <typename T>
@@ -51,7 +56,7 @@ template <typename T>
 template <typename T>
 void  Matrix<T>::print(){
   for(int row = 0; row < rowsNum; row++){
-      for(int col = 0; col < colsNum; col ++)
+      for(int col = 0; col < colsNum; col++)
           std::cout << elems[row][col] << "  ";
       std::cout << '\n';
   }
@@ -96,3 +101,42 @@ template <typename T>
 
 template <typename T>
   T** Matrix<T>::getElems() const {return elems; }
+
+
+//operators
+template <typename T>
+  Matrix<T>&  Matrix<T>::operator+(const Matrix<T>& other){
+    if((rowsNum == other.rowsNum) and (colsNum == other.colsNum))
+       for(int row = 0; row < rowsNum; row++)
+          for(int col = 0; col < colsNum; col++)
+             elems[row][col] = elems[row][col] + other.elems[row][col];
+    return *this;
+  }
+ 
+template <typename T>
+  Matrix<T>& Matrix<T>::operator=(const Matrix<T>& other){
+    if(this == &other)
+       return *this;
+
+    const int newRowsNum = other.getRowsNum();
+    const int newColsNum = other.getColsNum();
+
+    for(int row = 0; row < rowsNum; row++)
+        delete[] elems[row];
+
+    delete[] elems;
+
+    T** temp = new T*[newRowsNum];
+    for(int row = 0; row < newRowsNum; row++)
+        temp[row] = new T[newColsNum];
+    
+    elems = temp;
+   
+    for(int row = 0; row < newRowsNum; row++)
+        for(int col = 0; col < newColsNum; col++)
+            elems[row][col] = other.elems[row][col];
+    
+    rowsNum = newRowsNum;
+    colsNum = newColsNum;
+    return *this;
+  }
