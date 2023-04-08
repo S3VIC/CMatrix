@@ -1,10 +1,14 @@
 #include<iostream>
-#include "matrix.hpp"
+#include "operations.hpp"
 
 int main(void){
   Matrix<int> matrix = Matrix<int>(2,2);
-  matrix.test();
-  matrix.print();
-  std::cout << "Hello" << std::endl;
+  Matrix<int> matrixB = Matrix<int>(2,2);
+  matrixB.toEye();
+  matrix.toEye();
+  Matrix<int>* added = add(matrix, matrixB);
+  if(added)
+      added->print();
+  //matrix.test();
   return 0;
 }
