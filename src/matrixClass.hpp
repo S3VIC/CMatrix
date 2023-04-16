@@ -17,12 +17,12 @@ template <typename T>
             Matrix<T>& operator=(const Matrix<T>& other);
             void test();
             void print();
-            void toEye();
-            void addInternally(const Matrix& matrixB);
             // getters
             int getRowsNum() const;
             int getColsNum() const;
             T** getElems() const;
+            // setters
+            void setElem(const int& row, const int& col, const T& value);
     };
 
 
@@ -62,37 +62,7 @@ void  Matrix<T>::print(){
   }
 }
 
-template <typename T>
-  void Matrix<T>::addInternally(const Matrix<T>& matrixB){
-    bool matrixACheck = (rowsNum > 1) and (colsNum > 1);
-    bool matrixBCheck = (matrixB.rowsNum > 1) and (matrixB.colsNum > 1);
-
-    if(matrixACheck and matrixBCheck){
-      if((rowsNum == matrixB.rowsNum) and (colsNum == matrixB.colsNum))
-          for(int row = 0; row < rowsNum; row++)
-              for(int col = 0; col < colsNum; col++)
-                  this->elems[row][col] += matrixB.elems[row][col];
-      else
-          std::cout << "Matrix dimensions do not match!" << '\n';
-    }
-  }
-
-template <typename T>
-  void Matrix<T>::toEye(){
-    if((rowsNum > 1) and (colsNum > 1))
-      for(int row = 0; row < rowsNum; row++)
-        for(int col = 0; col < colsNum; col++)
-            if(row == col)
-              this->elems[row][col] = 1;    
-  }
-
-template <typename T>  
-  void Matrix<T>::test(){
-    std::cout << "Hello from Lib" << std::endl;
-  }
-
 //getters
-
 template <typename T>
   int Matrix<T>::getRowsNum() const{ return rowsNum; }
 
@@ -102,15 +72,23 @@ template <typename T>
 template <typename T>
   T** Matrix<T>::getElems() const {return elems; }
 
+//setters
+template <typename T>
+  void Matrix<T>::setElem(const int& row, const int& col, const T& value) { elems[row][col] = value; }
 
 //operators
 template <typename T>
   Matrix<T>&  Matrix<T>::operator+(const Matrix<T>& other){
-    if((rowsNum == other.rowsNum) and (colsNum == other.colsNum))
+    if((rowsNum == other.rowsNum) and (colsNum == other.colsNum)){
        for(int row = 0; row < rowsNum; row++)
           for(int col = 0; col < colsNum; col++)
              elems[row][col] = elems[row][col] + other.elems[row][col];
     return *this;
+    }
+    else{
+      std::cout << "Dimensions do not match!" << '\n';
+      return *this;
+    }
   }
  
 template <typename T>

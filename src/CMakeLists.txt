@@ -5,6 +5,7 @@ include_directories(../include)
 set(matrixSRCS 
     matrixClass.hpp
     operations.hpp
+    specialMatrices.hpp
 )
 
 add_library(matrix SHARED
